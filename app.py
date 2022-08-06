@@ -37,9 +37,9 @@ def hit():
     # TODO если игра не идет - пропускаем срабатывание метода (простот рендерим шаблон с текущими данными)
     if arena.game_is_running:
         result = arena.player_hit()
-        return render_template("fight.html", heroes=heroes, result=result)
-    else:
-        return render_template("fight.html", heroes=heroes, result=arena.battle_result)
+    return render_template("fight.html", heroes=heroes)
+    # else:
+    #     return render_template("fight.html", heroes=heroes, result=arena.battle_result)
 
 
 @app.route("/fight/use-skill")
@@ -97,8 +97,8 @@ def choose_hero():
         weapon_name = request.form.get("weapon")
         unit_class = request.form.get("unit_class")
         player = PlayerUnit(name=name,
-                            weapon=Equipment().get_weapon('weapon_name'),
-                            armor=Equipment().get_armor('armor_name'),
+                            weapon=Equipment().get_weapon(weapon_name),
+                            armor=Equipment().get_armor(armor_name),
                             unit_class=unit_classes.get(unit_class))
         player.equip_weapon(Equipment().get_weapon(weapon_name))
         player.equip_armor(Equipment().get_armor(armor_name))
@@ -132,8 +132,8 @@ def choose_enemy():
         weapon_name = request.form.get("weapon")
         unit_class = request.form.get("unit_class")
         enemy = EnemyUnit(name=name,
-                          weapon=Equipment().get_weapon('weapon_name'),
-                          armor=Equipment().get_armor('armor_name'),
+                          weapon=Equipment().get_weapon(weapon_name),
+                          armor=Equipment().get_armor(armor_name),
                           unit_class=unit_classes.get(unit_class))
         enemy.equip_weapon(Equipment().get_weapon(weapon_name))
         enemy.equip_armor(Equipment().get_armor(armor_name))
@@ -142,4 +142,4 @@ def choose_enemy():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5002)
