@@ -34,8 +34,8 @@ ArmorSchema = marshmallow_dataclass.class_schema(Armor)
 @dataclass
 class EquipmentData:
     # TODO содержит 2 списка - с оружием и с броней
-    weapons: [List]
-    armors: [List]
+    weapons: List
+    armors: List
 
 
 class Equipment:
@@ -43,14 +43,13 @@ class Equipment:
     def __init__(self):
         self.equipment = self._get_equipment_data()
 
-    def get_weapon(self, weapon_name) -> Weapon:
+    def get_weapon(self, weapon_name: str) -> Weapon:
         # TODO возвращает объект оружия по имени
         for weapon in self.equipment.weapons:
             if weapon_name == weapon.name:
-                print(weapon)
                 return weapon
 
-    def get_armor(self, armor_name) -> Armor:
+    def get_armor(self, armor_name: str) -> Armor:
         # TODO возвращает объект брони по имени
         for armor in self.equipment.armors:
             if armor_name == armor.name:

@@ -31,10 +31,10 @@ class BaseUnit(ABC):
         return self.stamina
 
     def equip_weapon(self, weapon: Weapon):
-        return f"{self.name} использует оружие: {self.weapon}"
+        return f"{self.name} использует оружие: {weapon}"
 
     def equip_armor(self, armor: Armor):
-        return f"{self.name} использует броню: {self.armor}"
+        return f"{self.name} использует броню: {armor}"
 
     def _count_damage(self, target: BaseUnit) -> int:
         self.stamina -= self.weapon.stamina_per_hit * self.unit_class.stamina
