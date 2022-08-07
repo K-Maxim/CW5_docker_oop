@@ -24,11 +24,7 @@ class Arena(metaclass=BaseSingleton):
         self.game_is_running = True
 
     def _check_players_hp(self) -> str:
-        # TODO ПРОВЕРКА ЗДОРОВЬЯ ИГРОКА И ВРАГА
-        # TODO проверка здоровья игрока и врага и возвращение результата строкой:
-        # TODO может быть три результата:
-        # TODO Игрок проиграл битву, Игрок выиграл битву, Ничья и сохраняем его в аттрибуте (self.battle_result)
-        # TODO если Здоровья игроков в порядке то ничего не происходит
+        """Проверка здоровья игрока и врага"""
         if self.player.hp <= 0 and self.enemy.hp <= 0:
             self.battle_result = "В этой битве нет победителя!"
             return self._end_game()
@@ -40,9 +36,7 @@ class Arena(metaclass=BaseSingleton):
             return self._end_game()
 
     def _stamina_regeneration(self) -> None:
-        # TODO регенерация здоровья и стамины для игрока и врага за ход
-        # TODO в этом методе к количеству стамины игрока и врага прибавляется константное значение.
-        # TODO главное чтобы оно не привысило максимальные значения (используйте if)
+        """Регенерация здоровья и стамины для игрока и врага за ход"""
         if self.player.stamina + self.STAMINA_PER_ROUND > self.player.unit_class.max_stamina:
             self.player.stamina = self.player.unit_class.max_stamina
         elif self.player.stamina < self.player.unit_class.max_stamina:
@@ -53,6 +47,7 @@ class Arena(metaclass=BaseSingleton):
             self.enemy.stamina += self.STAMINA_PER_ROUND
 
     def next_turn(self) -> str:
+        """Восстановление показателей и удар противника"""
         result = self._check_players_hp()
         if result:
             return result
@@ -65,30 +60,21 @@ class Arena(metaclass=BaseSingleton):
             return self.enemy.hit(self.player)
 
     def _end_game(self) -> str:
-        # TODO КНОПКА ЗАВЕРШЕНИЕ ИГРЫ - > return result: str
-        # TODO очищаем синглтон - self._instances = {}
-        # TODO останавливаем игру (game_is_running)
-        # TODO возвращаем результат
+        """Кнопка завершения игры"""
         self._instances = {}
         result = f"{self.battle_result}"
         self.game_is_running = False
         return result
 
     def player_hit(self) -> str:
-        # TODO КНОПКА УДАР ИГРОКА -> return result: str
-        # TODO получаем результат от функции self.player.hit
-        # TODO запускаем следующий ход
-        # TODO возвращаем результат удара строкой
+        """Удар игрока"""
         self._instances = {}
         result = self.player.hit(self.enemy)
         turn_result = self.next_turn()
         return f"{result}\n{turn_result}"
 
     def player_use_skill(self) -> str:
-        # TODO КНОПКА ИГРОК ИСПОЛЬЗУЕТ УМЕНИЕ
-        # TODO получаем результат от функции self.use_skill
-        # TODO включаем следующий ход
-        # TODO возвращаем результат удара строкой
+        """Использование способности"""
         result = self.player.use_skill(self.enemy)
         turn_result = self.next_turn()
         return f"{result}\n{turn_result}"
