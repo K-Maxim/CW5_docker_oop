@@ -7,9 +7,7 @@ if TYPE_CHECKING:
 
 
 class Skill(ABC):
-    """
-    Базовый класс умения
-    """
+    """Базовый класс умения"""
     user = None
     target = None
 
@@ -36,10 +34,8 @@ class Skill(ABC):
         return self.user.stamina > self.stamina
 
     def use(self, user: BaseUnit, target: BaseUnit) -> str:
-        """
-        Проверка, достаточно ли выносливости у игрока для применения умения.
-        Для вызова скилла везде используем просто use
-        """
+        """Проверка, достаточно ли выносливости у игрока для применения умения.
+        Для вызова скилла везде используем просто use"""
         self.user = user
         self.target = target
         if self._is_stamina_enough:
@@ -56,7 +52,6 @@ class GodRebuke(Skill):
         self.user.stamina -= self.stamina
         self.target.get_damage(self.damage)
         return f"{self.user.name} наносит по {self.target.name} {self.damage} урона способностью {self.name}"
-
 
 
 class ShadowStep(Skill):
