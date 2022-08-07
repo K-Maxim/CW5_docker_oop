@@ -34,8 +34,8 @@ ArmorSchema = marshmallow_dataclass.class_schema(Armor)
 @dataclass
 class EquipmentData:
     # TODO содержит 2 списка - с оружием и с броней
-    weapons: List
-    armors: List
+    weapons: [List]
+    armors: [List]
 
 
 class Equipment:
