@@ -1,8 +1,9 @@
 from unit import BaseUnit
+from typing import Dict, Any, Union, List
 
 
 class BaseSingleton(type):
-    _instances = {}
+    _instances: dict = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
@@ -18,7 +19,7 @@ class Arena(metaclass=BaseSingleton):
     game_is_running: bool = False
     battle_result = None
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
         self.player = player
         self.enemy = enemy
         self.game_is_running = True
@@ -33,13 +34,13 @@ class Arena(metaclass=BaseSingleton):
             self.battle_result = "В этой битве нет победителя!"
             return self._end_game()
         if self.player.hp <= 0:
-            self.battle_result = "Игрок проиграл битву!"
+            self.battle_result = f"Игрок {self.player.name} проиграл битву!"
             return self._end_game()
         if self.enemy.hp <= 0:
-            self.battle_result = "Игрок выиграл битву!"
+            self.battle_result = f"Игрок {self.player.name} выиграл битву!"
             return self._end_game()
 
-    def _stamina_regeneration(self):
+    def _stamina_regeneration(self) -> None:
         # TODO регенерация здоровья и стамины для игрока и врага за ход
         # TODO в этом методе к количеству стамины игрока и врага прибавляется константное значение.
         # TODO главное чтобы оно не привысило максимальные значения (используйте if)
